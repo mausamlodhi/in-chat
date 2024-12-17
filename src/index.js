@@ -1,16 +1,14 @@
+import os from "os";
 import bodyParser from "body-parser";
 import compression from "compression";
 import express from "express";
 import cluster from "cluster";
 import path from "path";
-import os from "os";
 import cors from "cors";
 import { I18n } from "i18n";
-import { Server } from "socket.io";
-import redisAdapter from "socket.io-redis";
 import model from "./model";
 import routes from "./routes";
-
+import socketServer from "./socket"
 export default class ServerClass {
   constructor(app) {
     this.app = app;
@@ -43,7 +41,7 @@ export default class ServerClass {
   start() {
     const environment = process.env.APPLICATION_ENVIRONMENT;
     if (environment === "production") {
-      const totalCPUs = os.cpus.length;
+      const totalCPUs = os.cpus().length;
       if (cluster.isPrimary) {
         for (let i = 0; i < totalCPUs; i++) {
           cluster.fork();
@@ -57,18 +55,15 @@ export default class ServerClass {
         const server = app.listen(port || 5050, () => {
           console.log("Server started at port number : ", port);
         });
-        const io = new Server(server);
-        io.adapter(redisAdapter({
-          host:'localhost',
-          port:6379
-        }))
+        socketServer(server)
       }
     } else {
       const { app } = this;
       const port = app.get("port");
-      app.listen(port || 5050, () => {
+      const server = app.listen(port || 5050, () => {
         console.log("Server started at port number : ", port);
       });
+      socketServer(server);
     }
   }
 }

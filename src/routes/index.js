@@ -1,11 +1,13 @@
 import { Router } from "express";
+import user from "./user.routes";
 
 const router = Router();
 const register = (app)=>{
     app.use(router);
-    // app.use('/api',[
-
-    // ]);
+    app.use('/api',[
+        user,
+        
+    ]);
     app.use((err,req,res,next)=>{
         if(err){
             res.status(500).json({

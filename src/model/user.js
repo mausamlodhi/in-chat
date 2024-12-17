@@ -13,12 +13,29 @@ module.exports = (mongoose)=>{
                 type:String,
                 allowNull:false
             },
-            phonbeNumber:{
+            phoneNumber:{
                 type:String,
                 allowNull:false
             },
+            password:{
+                type:String,
+                allowNull:false
+            },
+            profileImage:{
+                type:String,
+                allowNull:true
+            },
             refreshToken:{
                 type:String,
+                allowNull:true
+            },
+            fcmToken:{
+                type:String,
+                allowNull:true
+            },
+            isVarified:{
+                type:Boolean,
+                default:false,
                 allowNull:true
             },
             createdAt:{
