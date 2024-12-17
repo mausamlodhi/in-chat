@@ -10,16 +10,16 @@ const validateRequest = (options)=> async(req,res,next)=>{
         next();
     }catch(error){
         const errors = [];
-        if(errors.isJoi){
+        if(error.isJoi){
             error.details.forEach((errorData)=>{
                 const errorObject = {
-                    message : "SOMETHING_WENT_WRONG",
+                    message : errorData.message,
                     field : errorData.path.join('_'),
                     type : errorData.type
                 };
                 errors.push(errorObject);
             });
-            response.status(HttpStatus.BAD_REQUEST).json({
+            return res.status(httpStatus.BAD_REQUEST).json({
                 success : false,
                 error : errors,
                 message : ""
