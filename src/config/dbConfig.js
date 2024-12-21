@@ -6,4 +6,7 @@ export default {
         db: 'in_chat',
       },
     },
+    app:{
+      mediaStorage:'local'
+    }
   };

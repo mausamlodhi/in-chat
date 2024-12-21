@@ -13,5 +13,8 @@ router.post('/signup',
     authMiddleware.checkUser,
     userController.userSignup
 );
+router.get('/users',
+    userController.getAllUsers
+)
 
 export default router;

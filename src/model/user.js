@@ -25,6 +25,16 @@ module.exports = (mongoose)=>{
                 type:String,
                 allowNull:true
             },
+            state:{
+                type:mongoose.Schema.Types.ObjectId,
+                ref:'state',
+                required:true
+            },
+            city:{
+                type:mongoose.Schema.Types.ObjectId,
+                ref:'city',
+                required:true
+            },
             refreshToken:{
                 type:String,
                 allowNull:true

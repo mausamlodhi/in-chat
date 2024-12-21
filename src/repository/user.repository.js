@@ -25,5 +25,20 @@ export default {
             showConsole(error);
             throw new Error(error);
         }
+    },
+    async getAllUsers(){
+        try{
+            const users = await user.find().populate([
+                {
+                    path:'city',
+                    select:'cityName'
+                },
+                'state'
+            ]);
+            return users;
+        }catch(error){
+            showConsole(error);
+            throw new Error(error);
+        }
     }
 }

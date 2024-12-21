@@ -1,11 +1,12 @@
 import { Router } from "express";
 import user from "./user.routes";
-
+import media from "./media.routes";
 const router = Router();
 const register = (app)=>{
     app.use(router);
     app.use('/api',[
         user,
+        media,
         
     ]);
     app.use((err,req,res,next)=>{

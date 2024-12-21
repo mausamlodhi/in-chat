@@ -31,18 +31,44 @@ export default {
         isVerified,
       };
       const result = await userRepository.userSignup(signupData);
-      if(result._id){
+      if (result._id) {
         return res.status(httpStatus.OK).json({
-            status:true,
-            data:result,
-            message:'USER_SIGNUP_SUCCESS'
+          status: true,
+          data: result,
+          message: "USER_SIGNUP_SUCCESS",
+        });
+      } else {
+        return res.status(httpStatus.BAD_REQUEST).json({
+          status: false,
+          data: result,
+          message: "SOMETHING_WENT_WRONG",
+        });
+      }
+    } catch (error) {
+      return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+        status: false,
+        data: null,
+        message: "INTERNAL_SERVER_ERROR",
+        error,
+      });
+    }
+  },
+
+  async getAllUsers(req, res, next) {
+    try {
+      const result = await userRepository.getAllUsers();
+      if (result) {
+        return res.status(httpStatus.OK).json({
+          status: true,
+          data: result,
+          message: "ALL_USERS_FETCHED",
         });
       }else{
         return res.status(httpStatus.BAD_REQUEST).json({
-            status:false,
-            data:result,
-            message:'SOMETHING_WENT_WRONG'
-        });
+          status:false,
+          data:result,
+          message:'SOMETHING_WENT_WRONG'
+      });
       }
     } catch (error) {
       return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
